@@ -20,6 +20,8 @@ const data = [
 ];
 
 const colorElement = document.getElementById("color");
+const whiteText = document.getElementById("white-text");
+const blackText = document.getElementById("black-text");
 const guessText = document.getElementById("guess-text");
 const buttons = document.getElementById("buttons");
 const whiteButton = document.getElementById("white-button");
@@ -31,36 +33,41 @@ let color;
 let learn = 0;
 
 guessButton.style.display = "none";
+guessText.style.display = "none";
 
 whiteButton.addEventListener("click", () => {
-  chooseColor(1);
+  chooseColorByUser(1);
 });
 
 blackButton.addEventListener("click", () => {
-  chooseColor(0);
+  chooseColorByUser(0);
 });
 
-guessButton.addEventListener("click", setRandomColor);
+guessButton.addEventListener("click", guessTextColor);
 
-net.train(data);
 setRandomColor();
 
-function chooseColor(value) {
+function chooseColorByUser(value) {
   if (learn < 20) {
     data.push({
       input: color,
       output: [value],
     });
     learn++;
-    net.train(data);
     setRandomColor();
     return;
   }
 
   whiteButton.style.display = "none";
   blackButton.style.display = "none";
+  whiteText.style.display = "none";
+  blackText.style.display = "none";
+
   guessButton.style.display = "";
-  setRandomColor();
+  guessText.style.display = "";
+
+  net.train(data);
+  guessTextColor();
 }
 
 function setRandomColor() {
@@ -69,11 +76,16 @@ function setRandomColor() {
     g: Math.random(),
     b: Math.random(),
   };
-
-  const guess = net.run(color)[0];
-  guessText.style.color = guess > 0.5 ? "#fff" : "#000";
-  guessProcent.innerHTML = `${parseInt(guess * 100)}% kolor biały`;
   colorElement.style.backgroundColor = `rgba(${color.r * 255}, ${
     color.g * 255
   }, ${color.b * 255})`;
+}
+
+function guessTextColor() {
+  setRandomColor();
+  const guess = net.run(color)[0];
+  guessText.style.color = guess > 0.5 ? "#fff" : "#000";
+  guessProcent.innerHTML = `${parseInt(guess * 100)}% kolor biały<br />${
+    100 - parseInt(guess * 100)
+  }% kolor czarny`;
 }
