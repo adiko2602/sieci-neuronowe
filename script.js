@@ -31,9 +31,9 @@ const guessButton = document.getElementById("guess-button");
 const guessProcent = document.getElementById("guess-procent");
 
 let color;
-let learn = 0;
+let learn = 20;
 
-step.innerHTML = `Pozostało ${20-learn} kroków`;
+step.innerHTML = `Pozostało ${learn} kroków`;
 guessButton.style.display = "none";
 guessText.style.display = "none";
 
@@ -50,14 +50,14 @@ guessButton.addEventListener("click", guessTextColor);
 setRandomColor();
 
 function chooseColorByUser(value) {
-  if (learn < 20) {
+  if (learn > 1) {
     data.push({
       input: color,
       output: [value],
     });
-    learn++;
+    learn--;
     setRandomColor();
-    step.innerHTML = `Pozostało ${20-learn} kroków`;
+    step.innerHTML = `Pozostało ${learn} kroków`;
     return;
   }
 
@@ -65,6 +65,7 @@ function chooseColorByUser(value) {
   blackButton.style.display = "none";
   whiteText.style.display = "none";
   blackText.style.display = "none";
+  step.style.display = "none";
 
   guessButton.style.display = "";
   guessText.style.display = "";
