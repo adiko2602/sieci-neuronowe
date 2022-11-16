@@ -19,6 +19,7 @@ const data = [
   },
 ];
 
+const step = document.getElementById("step");
 const colorElement = document.getElementById("color");
 const whiteText = document.getElementById("white-text");
 const blackText = document.getElementById("black-text");
@@ -32,6 +33,7 @@ const guessProcent = document.getElementById("guess-procent");
 let color;
 let learn = 0;
 
+step.innerHTML = `Pozostało ${20-learn} kroków`;
 guessButton.style.display = "none";
 guessText.style.display = "none";
 
@@ -55,6 +57,7 @@ function chooseColorByUser(value) {
     });
     learn++;
     setRandomColor();
+    step.innerHTML = `Pozostało ${20-learn} kroków`;
     return;
   }
 
