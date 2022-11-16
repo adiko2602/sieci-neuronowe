@@ -33,7 +33,7 @@ const guessProcent = document.getElementById("guess-procent");
 let color;
 let learn = 20;
 
-step.innerHTML = `Pozostało ${learn} kroków`;
+step.innerHTML = `Pozostało <strong>${learn}</strong> kroków`;
 guessButton.style.display = "none";
 guessText.style.display = "none";
 
@@ -57,7 +57,7 @@ function chooseColorByUser(value) {
     });
     learn--;
     setRandomColor();
-    step.innerHTML = `Pozostało ${learn} kroków`;
+    step.innerHTML = `Pozostało <strong>${learn}</strong> kroków`;
     return;
   }
 
